@@ -1,4 +1,4 @@
-# Speedy Heuristic Approach for Autonomously Navigating Geographical Unknown Spaces (SHANGUS)
+# Speedy Heuristic Approach for Autonomously Navigating Geographical Unknown Spaces (SHA-ANGUS)
 
 ## Introduction
 SHA-ANGUS is a fastest frontier based exploration algorithm
