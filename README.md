@@ -1,4 +1,4 @@
-# Fast Heuristics or Autonomous Nvigation In Geographical Unexplored Spaces (fh-ANGUS)
+# Fast Heuristics or Autonomous Nvigation in Geographical Unexplored Spaces (fh-ANGUS)
 
 ## Introduction
 fh-ANGUS is a fastest frontier based exploration algorithm
