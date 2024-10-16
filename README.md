@@ -5,7 +5,7 @@ fh-ANGUS is a fastest frontier based exploration algorithm
 Parer link : https://arxiv.org/abs/2407.18892
 
 - **Author:**
-  1. Seunghyeop Nam(Personal Web: http://117.16.137.18, Linked In: www.linkedin.com/in/seunghyeop-nam-6b3201320)
+  1. Seunghyeop Nam(Personal Web: http://117.16.137.18, Linked In: https://www.linkedin.com/in/seunghyeop-nam-6b3201320)
   2. Tuan Anh Nguyen(https://www.linkedin.com/in/tuan-anh-nguyen-9711551b/)
 - **Development:** Seunghyeop Nam
 - **Thanks to:** Tomasvr (https://github.com/tomasvr/turtlebot3_drlnav)
