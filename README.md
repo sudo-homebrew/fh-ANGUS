@@ -354,7 +354,7 @@ For more detailed instructions on ros workspaces check [this guide](https://auto
 
 # **Training**
 
-<img src="media/system_architecture.png" alt="System Architecture" width="700">
+<img src="img/system_architecture.jpg" alt="System Architecture" width="700">
 
 ## **Running and training the DRL agent!**
 
