@@ -297,7 +297,7 @@ Next, install the correct rosdep tool
 sudo apt install python3-rosdep2
 ```
 
-Then initialize rosdep by running
+Then initialise rosdep by running
 ```
 rosdep update
 ```
@@ -369,7 +369,7 @@ After successfully setting up the environment, you’re ready to begin training 
 
    **Important:** Run this simulation command before starting other processes to ensure parameters are correctly set.
 
-2. **Initialize Goals**: In the second terminal, set up the goal system:
+2. **Initialise Goals**: In the second terminal, set up the goal system:
    ```zsh
    ros2 run simulation_world goal_manager
    ```
@@ -435,7 +435,7 @@ ros2 launch simulation_world stage_change.launch.py --stage 5
 
 ## Optional Adjustments and Configurations
 
-### Customizing Rewards and Settings
+### Customising Rewards and Settings
 
 1. **Rewards**: Modify the `reward.py` file to implement custom reward functions. Enable them in `settings.py` by specifying the reward strategy.
 2. **Parameter Tuning**: Adjust hyperparameters for training and performance in `settings.py`.
@@ -447,3 +447,35 @@ Allow backward movement by enabling `ENABLE_BACKWARD` in the settings file.
 ### Frame Stacking for Obstacle Prediction
 
 Frame stacking considers multiple laser scan frames to predict obstacle movements. Configure this in `settings.py` by enabling `ENABLE_STACKING` and setting parameters like `STACK_DEPTH`.
+
+# Fast Heuristic Node
+
+## SLAM Node
+Running Fast Heuristic Node requires SLAM node provided by ROS2 package with fallowing zsh command line.
+
+```zsh
+ros2 launch slam_toolbox online_async_launch.py use+sim_time:=True
+```
+
+## fh-ANGUS with DRL navigation
+To run `Fast Heuristic Node` run fallowing zsh command line which work with DRL navigation node.
+
+```zsh
+ros2 launch turtlebot3_explore exploration_DRL.launch.py
+```
+
+Before launch exploration_DRL make sure you run DRL agent and environment.
+
+
+## fh-ANGUS with ROS2 nav2 package navigation
+To run with nav2 package that provided by ROS2, run fallowing zsh command lines in separate terminals
+
+### Terminal 1
+```zsh
+ros2 launch nav2_bringup navigation_launch.py use_sim_time:=True
+```
+
+### Terminal 2
+```zsh
+ros2 launch turtlebot3_explore exploration_nav2.launch.py
+```
