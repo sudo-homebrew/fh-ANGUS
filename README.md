@@ -278,6 +278,7 @@ There for you have to designate which CMake and Python to use when you are build
 colcon build --symlink-install --cmake-args -DPython3_FIND_VIRTUALENV="ONLY" -DCMAKE_INSTALL_NAME_DIR=$(pwd)/install/lib  -DPYTHON_EXECUTABLE=/opt/homebrew/anaconda3/envs/<your_virtual_env_name>/bin/python -Wno-dev
 ```
 
+# Download and build the code
 
 Now it's time to download the repository to the actual code.
 
@@ -287,65 +288,52 @@ git clone https://github.com/sudo-homebrew/fh-ANGUS.git
 ```
 
 `cd` into the directory and make sure you are on the main branch
-```
-cd robotic_navigation_model_drlnav
+```zsh
+cd turtlebot3_drlnav
 git checkout main
 ```
 
-Next, install the correct rosdep tool
-```
-sudo apt install python3-rosdep2
-```
-
 Then initialise rosdep by running
-```
+```zsh
 rosdep update
 ```
 
 Now we can use rosdep to install all ROS packages needed by our repository
-```
+```zsh
 rosdep install -i --from-path src --rosdistro humble -y
 ```
 
-Now that we have all of the packages in place it is time to build the repository. First update your package list
-```
-sudo apt update
-```
-
-Then install the build tool **colcon** which we will use to build our ROS2 package
-```
-sudo apt install python3-colcon-common-extensions
-```
 
 Next, it's time to actually build the repository code!
+```zsh
+colcon build --symlink-install --cmake-args -DPython3_FIND_VIRTUALENV="ONLY" -DCMAKE_INSTALL_NAME_DIR=$(pwd)/install/lib  -DPYTHON_EXECUTABLE=/opt/homebrew/anaconda3/envs/<your_virtual_env_name>/bin/python -Wno-dev
 ```
-colcon build
-```
+
 After colcon has finished building source the repository
-```
+```zsh
 source install/setup.zsh
 ```
 
-The last thing we need to do before running the code is add a few lines to our `~/.zshrc` file so that they are automatically executed whenever we open a new terminal. Add the following lines at the end of your `~/.zshrc` file and **replace ~/path/to/robotic_navigation_model_drlnav/repo with the path where you cloned the repository. (e.g. ~/robotic_navigation_model_drlnav)**
-```
+The last thing we need to do before running the code is add a few lines to our `~/.zshrc` file so that they are automatically executed whenever we open a new terminal. Add the following lines at the end of your `~/.zshrc` file and **replace ~/path/to/turtlebot3_drlnav/repo with the path where you cloned the repository. (e.g. ~/turtlebot3_drlnav)**
+```zsh
 # ROS2 domain id for network communication, machines with the same ID will receive each others' messages
 export ROS_DOMAIN_ID=1
 
-# Fill in the path to where you cloned the robotic_navigation_model_drlnav repo
-WORKSPACE_DIR=~/path/to/robotic_navigation_model_drlnav
+# Fill in the path to where you cloned the turtlebot3_drlnav repo
+WORKSPACE_DIR=~/path/to/turtlebot3_drlnav
 export DRLNAV_BASE_PATH=$WORKSPACE_DIR
 
 # Source the workspace
 source $WORKSPACE_DIR/install/setup.zsh
 
-# Allow gazebo to find our robotic_navigation_model models
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$WORKSPACE_DIR/src/robotic_navigation_model_simulations/robotic_navigation_model_gazebo/models
+# Allow gazebo to find our turtlebot3 models
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$WORKSPACE_DIR/src/turtlebot3_simulations/turtlebot3_gazebo/models
 
-# Select which robotic_navigation_model model we will be using (default: burger, waffle, waffle_pi)
-export TURTLEBOT3_MODEL=burger
+# Select which turtlebot3 model we will be using (default: burger, waffle, waffle_pi)
+export TURTLEBOT3_MODEL=waffle_pi
 
 # Allow Gazebo to find the plugin for moving the obstacles
-export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:$WORKSPACE_DIR/src/robotic_navigation_model_simulations/robotic_navigation_model_gazebo/models/robotic_navigation_model_drl_world/obstacle_plugin/lib
+export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:$WORKSPACE_DIR/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_drl_world/obstacle_plugin/lib
 ```
 
 For more detailed instructions on ros workspaces check [this guide](https://automaticaddison.com/how-to-create-a-workspace-ros-2-humble-fitzroy/).
@@ -363,7 +351,7 @@ After successfully setting up the environment, you’re ready to begin training 
 
 1. **Launch the Simulation**: Open four separate terminal windows. In the first terminal, execute the following command to start the simulation environment:
    ```zsh
-   ros2 launch simulation_world training_stage.launch.py
+   ros2 launch turtlebot3_gazebo turtlebot3_drl_stage<n>.launch.py
    ```
    This will initiate the simulation GUI where the robot and moving obstacles will appear (loading might take some time).
 
@@ -371,26 +359,26 @@ After successfully setting up the environment, you’re ready to begin training 
 
 2. **Initialise Goals**: In the second terminal, set up the goal system:
    ```zsh
-   ros2 run simulation_world goal_manager
+   ros2 run turtlebot3_drl goal_manager
    ```
 
 3. **Launch the Environment Node**: Use the third terminal to initiate the environment:
    ```zsh
-   ros2 run simulation_world environment_node
+   ros2 run turtlebot3_drl environment
    ```
 
 4. **Run the Training Agent**: Finally, in the fourth terminal, launch the desired Deep Reinforcement Learning (DRL) algorithm. For example:
    - For Deep Deterministic Policy Gradient (DDPG):
      ```zsh
-     ros2 run simulation_world train_agent ddpg
+     ros2 run turtlebot3_drl train_agent ddpg
      ```
    - For Twin Delayed DDPG (TD3):
      ```zsh
-     ros2 run simulation_world train_agent td3
+     ros2 run turtlebot3_drl train_agent td3
      ```
    - For Deep Q-Network (DQN):
      ```zsh
-     ros2 run simulation_world train_agent dqn
+     ros2 run turtlebot3_drl train_agent dqn
      ```
 
    The agent should start moving and interact with the environment as the training progresses. Feedback and logs will be printed on the terminal during this process.
@@ -403,13 +391,13 @@ The model automatically saves its current state at regular intervals as defined 
 
 1. **Testing a Model**:
    ```zsh
-   ros2 run simulation_world test_agent ddpg "model_name" 500
+   ros2 run turtlebot3_drl test_agent ddpg "model_name" 500
    ```
    Replace `"model_name"` with the appropriate file name and `500` with the episode number you want to test.
 
 2. **Continuing Training**:
    ```zsh
-   ros2 run simulation_world train_agent ddpg "model_name" 500
+   ros2 run turtlebot3_drl train_agent ddpg "model_name" 500
    ```
    This command continues training from the specified episode and model checkpoint.
 
@@ -419,18 +407,18 @@ Example models for DDPG and TD3 are provided. To test them:
 1. Open four terminals as before.
 2. Launch the simulation:
    ```zsh
-   ros2 launch simulation_world example_stage.launch.py
+   ros2 launch turtlebot3_drl example_stage.launch.py
    ```
 3. Set up goals, environment, and run the test agent:
    ```zsh
-   ros2 run simulation_world goal_manager
-   ros2 run simulation_world environment_node
-   ros2 run simulation_world test_agent ddpg "example_ddpg_model" 1000
+   ros2 run turtlebot3_drl goal_manager
+   ros2 run turtlebot3_drl environment_node
+   ros2 run turtlebot3_drl test_agent ddpg "example_ddpg_model" 1000
    ```
 
 To switch between environments, modify the stage number in the launch command:
 ```zsh
-ros2 launch simulation_world stage_change.launch.py --stage 5
+ros2 launch turtlebot3_drl stage_change.launch.py --stage 5
 ```
 
 ## Optional Adjustments and Configurations
