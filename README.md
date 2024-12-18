@@ -362,35 +362,35 @@ For more detailed instructions on ros workspaces check [this guide](https://auto
 After successfully setting up the environment, you’re ready to begin training the agent. Follow the steps below to start training:
 
 1. **Launch the Simulation**: Open four separate terminal windows. In the first terminal, execute the following command to start the simulation environment:
-   ```bash
-   robot_os_v2 launch simulation_world training_stage.launch.py
+   ```zsh
+   ros2 launch simulation_world training_stage.launch.py
    ```
    This will initiate the simulation GUI where the robot and moving obstacles will appear (loading might take some time).
 
    **Important:** Run this simulation command before starting other processes to ensure parameters are correctly set.
 
 2. **Initialize Goals**: In the second terminal, set up the goal system:
-   ```bash
-   robot_os_v2 run simulation_world goal_manager
+   ```zsh
+   ros2 run simulation_world goal_manager
    ```
 
 3. **Launch the Environment Node**: Use the third terminal to initiate the environment:
-   ```bash
-   robot_os_v2 run simulation_world environment_node
+   ```zsh
+   ros2 run simulation_world environment_node
    ```
 
 4. **Run the Training Agent**: Finally, in the fourth terminal, launch the desired Deep Reinforcement Learning (DRL) algorithm. For example:
    - For Deep Deterministic Policy Gradient (DDPG):
-     ```bash
-     robot_os_v2 run simulation_world train_agent ddpg
+     ```zsh
+     ros2 run simulation_world train_agent ddpg
      ```
    - For Twin Delayed DDPG (TD3):
-     ```bash
-     robot_os_v2 run simulation_world train_agent td3
+     ```zsh
+     ros2 run simulation_world train_agent td3
      ```
    - For Deep Q-Network (DQN):
-     ```bash
-     robot_os_v2 run simulation_world train_agent dqn
+     ```zsh
+     ros2 run simulation_world train_agent dqn
      ```
 
    The agent should start moving and interact with the environment as the training progresses. Feedback and logs will be printed on the terminal during this process.
@@ -402,14 +402,14 @@ After successfully setting up the environment, you’re ready to begin training 
 The model automatically saves its current state at regular intervals as defined in the configuration. To resume training or test a pre-trained model:
 
 1. **Testing a Model**:
-   ```bash
-   robot_os_v2 run simulation_world test_agent ddpg "model_name" 500
+   ```zsh
+   ros2 run simulation_world test_agent ddpg "model_name" 500
    ```
    Replace `"model_name"` with the appropriate file name and `500` with the episode number you want to test.
 
 2. **Continuing Training**:
-   ```bash
-   robot_os_v2 run simulation_world train_agent ddpg "model_name" 500
+   ```zsh
+   ros2 run simulation_world train_agent ddpg "model_name" 500
    ```
    This command continues training from the specified episode and model checkpoint.
 
@@ -418,19 +418,19 @@ The model automatically saves its current state at regular intervals as defined 
 Example models for DDPG and TD3 are provided. To test them:
 1. Open four terminals as before.
 2. Launch the simulation:
-   ```bash
-   robot_os_v2 launch simulation_world example_stage.launch.py
+   ```zsh
+   ros2 launch simulation_world example_stage.launch.py
    ```
 3. Set up goals, environment, and run the test agent:
-   ```bash
-   robot_os_v2 run simulation_world goal_manager
-   robot_os_v2 run simulation_world environment_node
-   robot_os_v2 run simulation_world test_agent ddpg "example_ddpg_model" 1000
+   ```zsh
+   ros2 run simulation_world goal_manager
+   ros2 run simulation_world environment_node
+   ros2 run simulation_world test_agent ddpg "example_ddpg_model" 1000
    ```
 
 To switch between environments, modify the stage number in the launch command:
-```bash
-robot_os_v2 launch simulation_world stage_change.launch.py --stage 5
+```zsh
+ros2 launch simulation_world stage_change.launch.py --stage 5
 ```
 
 ## Optional Adjustments and Configurations
